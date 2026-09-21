@@ -24,6 +24,15 @@
         </div>
 
         <div>
+            <x-input-label for="username" :value="__('Username')" />
+            <x-text-input id="username" type="text" class="mt-1 block w-full bg-gray-100 text-gray-500" :value="$user->username" disabled />
+
+            <p class="mt-1 text-sm text-gray-500">
+                {{ __('The username cannot be changed.') }}
+            </p>
+        </div>
+
+        <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />

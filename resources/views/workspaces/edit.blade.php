@@ -1,30 +1,53 @@
 <x-app-layout>
-    <div class="py-8 max-w-3xl mx-auto px-4">
-        <h1 class="text-2xl font-semibold mb-6">Editar workspace</h1>
+    <div class="min-h-screen bg-slate-50 py-10">
+        <div class="mx-auto max-w-2xl px-4 sm:px-6">
+            <a href="{{ route('workspaces.show', $workspace) }}"
+               class="text-sm font-medium text-indigo-600 hover:text-indigo-800">
+                ← Volver al workspace
+            </a>
 
-        <form action="{{ route('workspaces.update', $workspace) }}" method="POST">
-            @csrf
-            @method('PATCH')
+            <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+                <h1 class="text-2xl font-bold text-slate-900">
+                    Editar workspace
+                </h1>
+                <p class="mt-2 text-slate-600">
+                    Cambia el título de tu espacio de trabajo.
+                </p>
 
-            <label for="title">Título</label>
-            <input
-                id="title"
-                name="title"
-                type="text"
-                value="{{ old('title', $workspace->title) }}"
-                required
-                class="block w-full border rounded mt-1 mb-2"
-            >
+                <form action="{{ route('workspaces.update', $workspace) }}"
+                      method="POST"
+                      class="mt-8">
+                    @csrf
+                    @method('PATCH')
 
-            @error('title')
-                <p class="text-red-600 mb-4">{{ $message }}</p>
-            @enderror
+                    <label for="title" class="block text-sm font-semibold text-slate-700">
+                        Título
+                    </label>
 
-            <button type="submit">Guardar cambios</button>
-        </form>
+                    <input id="title"
+                           name="title"
+                           type="text"
+                           value="{{ old('title', $workspace->title) }}"
+                           required
+                           class="mt-2 block w-full rounded-xl border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
 
-        <a href="{{ route('workspaces.show', $workspace) }}">
-            Cancelar
-        </a>
+                    @error('title')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+
+                    <div class="mt-8 flex flex-wrap items-center gap-4">
+                        <button type="submit"
+                                class="rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white hover:bg-indigo-700">
+                            Guardar cambios
+                        </button>
+
+                        <a href="{{ route('workspaces.show', $workspace) }}"
+                           class="font-medium text-slate-600 hover:text-slate-900">
+                            Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </x-app-layout>

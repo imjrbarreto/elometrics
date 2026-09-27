@@ -19,7 +19,7 @@ class WorkspacePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Workspace $workspace): bool
+    public function show(User $user, Workspace $workspace): bool
     {
         return $workspace->user_id === $user->id;;
     }
@@ -29,7 +29,7 @@ class WorkspacePolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**

@@ -15,7 +15,7 @@ class WorkspaceController extends Controller
      */
     public function index(Request $request)
     {
-        $workspaces = $request->user()->workspaces()->latest()->get();
+        $workspaces = $request->user()->workspaces()->withCount('students')->latest()->get();
 
         return view('workspaces.index', compact('workspaces'));
     }

@@ -21,7 +21,7 @@ class WorkspacePolicy
      */
     public function show(User $user, Workspace $workspace): bool
     {
-        return $workspace->user_id === $user->id;;
+        return $workspace->user_id === $user->id;
     }
 
     /**
@@ -37,7 +37,7 @@ class WorkspacePolicy
      */
     public function update(User $user, Workspace $workspace): bool
     {
-        return $workspace->user_id === $user->id;;
+        return $workspace->user_id === $user->id;
     }
 
     /**
@@ -45,7 +45,7 @@ class WorkspacePolicy
      */
     public function delete(User $user, Workspace $workspace): bool
     {
-        return $workspace->user_id === $user->id;;
+        return $workspace->user_id === $user->id;
     }
 
     /**
@@ -62,5 +62,10 @@ class WorkspacePolicy
     public function forceDelete(User $user, Workspace $workspace): bool
     {
         return false;
+    }
+
+    public function manageStudents(User $user, Workspace $workspace): bool
+    {
+        return $workspace->user_id === $user->id;
     }
 }

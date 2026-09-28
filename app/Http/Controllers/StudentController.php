@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreStudentRequest;
 use App\Models\Workspace;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
@@ -13,28 +14,29 @@ class StudentController extends Controller
      */
     public function index(Workspace $workspace)
     {
-        Gate::authorize('show', $workspace);
-
-        $students = $workspace->students()->orderBy('name')->get();
-
-        return view('students.index', compact('workspace', 'students'));
-
+        //
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Workspace $workspace)
     {
-        //
+        Gate::authorize('manageStudents', $workspace);
+
+        return view('students.create', compact('workspace'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreStudentRequest $request, Workspace $workspace)
     {
-        //
+        Gate::authorize('manageStudents', $workspace);
+
+        $workspace->students()->create($request->validated());
+
+        return redirect()->route('workspaces.show', $workspace);
     }
 
     /**

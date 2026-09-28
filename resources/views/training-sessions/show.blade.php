@@ -2,7 +2,7 @@
     <div class="min-h-screen bg-slate-50 py-10">
         <div class="mx-auto max-w-3xl px-4 sm:px-6">
             <a href="{{ route('workspaces.show', $workspace) }}"
-               class="text-sm font-medium text-indigo-600 hover:text-indigo-800">
+                class="text-sm font-medium text-indigo-600 hover:text-indigo-800">
                 ← Volver al workspace
             </a>
 
@@ -24,6 +24,21 @@
                         <p class="mt-3 text-slate-500">Aún no hay un resumen para esta sesión.</p>
                     @endif
                 </div>
+
+                <a href="{{ route('training-sessions.edit', [$workspace, $trainingSession]) }}"
+                    class="inline-flex justify-center rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white hover:bg-indigo-700">
+                    Editar Sesion
+                </a>
+
+                <form method="POST" action="{{ route('training-sessions.destroy', [$workspace, $trainingSession]) }}"
+                    onsubmit="return confirm('¿Eliminar a esta sesion?')">
+                    @csrf
+                    @method('DELETE')
+
+                    <button type="submit" class="text-sm font-semibold text-red-700 hover:text-red-900">
+                        Eliminar
+                    </button>
+                </form>
             </article>
         </div>
     </div>

@@ -12,10 +12,10 @@
                             Workspace
                         </p>
                         <h1 class="mt-2 text-3xl font-bold text-slate-900">
-                            {{ $workspace->title }}
+                            {{ __($workspace->title) }}
                         </h1>
                         <p class="mt-3 text-sm text-slate-500">
-                            Creado el {{ $workspace->created_at->format('d/m/Y') }}
+                            Creado el {{ __($workspace->created_at->format('d/m/Y')) }}
                         </p>
                     </div>
 
@@ -50,7 +50,7 @@
                 <div class="mt-6 space-y-3">
                     @forelse ($students as $student)
                         <div class="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3">
-                            <span class="text-slate-800">{{ $student->name }}</span>
+                            <span class="text-slate-800">{{ __($student->name) }}</span>
 
                             <form method="POST"
                                 action="{{ route('workspaces.students.destroy', [$workspace, $student]) }}"
@@ -88,16 +88,16 @@
                         <a href="{{ route('training-sessions.show', [$workspace, $trainingSession]) }}"
                             class="block rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-300 hover:shadow-md">
                             <p class="text-sm font-medium text-indigo-600">
-                                {{ $trainingSession->date->format('d/m/Y') }}
+                                {{ __($trainingSession->date->format('d/m/Y')) }}
                             </p>
 
                             <h3 class="mt-2 text-lg font-semibold text-slate-900">
-                                {{ $trainingSession->title }}
+                                {{ __($trainingSession->title) }}
                             </h3>
 
                             @if ($trainingSession->summary)
                                 <p class="mt-3 text-sm text-slate-600">
-                                    {{ \Illuminate\Support\Str::limit($trainingSession->summary, 120) }}
+                                    {{ __($trainingSession->summary) }}
                                 </p>
                             @endif
                             </a>

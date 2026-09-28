@@ -26,6 +26,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/workspaces/{workspace}/training-sessions/create', [TrainingSessionController::class, 'create'])->name('training-sessions.create');
     Route::post('/workspaces/{workspace}/training-sessions', [TrainingSessionController::class, 'store'])->name('training-sessions.store');
     Route::get('/workspaces/{workspace}/training-sessions/{trainingSession}', [TrainingSessionController::class, 'show'])->name('training-sessions.show');
+    Route::get('/workspaces/{workspace}/training-sessions/{trainingSession}/edit', [TrainingSessionController::class, 'edit'])->name('training-sessions.edit');
+    Route::patch('/workspaces/{workspace}/training-sessions/{trainingSession}', [TrainingSessionController::class, 'update'])->name('training-sessions.update');
+    Route::delete('/workspaces/{workspace}/training-sessions/{trainingSession}', [TrainingSessionController::class, 'destroy'])->name('training-sessions.destroy');
 });
 
 require __DIR__.'/auth.php';

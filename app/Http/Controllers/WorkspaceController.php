@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreWorkspaceRequest;
-use App\Http\Requests\UpdateWorkspaceRequest;
-use App\Models\TrainingSession;
+use App\Http\Requests\WorkspaceRequest;
 use App\Models\Workspace;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
@@ -34,7 +32,7 @@ class WorkspaceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreWorkspaceRequest $request)
+    public function store(WorkspaceRequest $request)
     {
         Gate::authorize('create', Workspace::class);
 
@@ -70,7 +68,7 @@ class WorkspaceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateWorkspaceRequest $request, Workspace $workspace)
+    public function update(WorkspaceRequest $request, Workspace $workspace)
     {
         Gate::authorize('update', $workspace);
 

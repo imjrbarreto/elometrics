@@ -25,7 +25,7 @@ class TrainingSessionRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'date' => ['required', 'date_format:Y-m-d'],
-            'summary' => ['nullable', 'string'],
+            'summary' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

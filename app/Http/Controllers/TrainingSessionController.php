@@ -6,7 +6,6 @@ use App\Http\Requests\TrainingSessionRequest;
 use App\Models\TrainingSession;
 use App\Models\Workspace;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Http\Request;
 
 class TrainingSessionController extends Controller
 {
@@ -30,9 +29,36 @@ class TrainingSessionController extends Controller
     {
         Gate::authorize('manageTrainingSessions', $workspace);
 
-
         abort_unless($trainingSession->workspace_id === $workspace->id, 404);
 
         return view('training-sessions.show', compact('workspace', 'trainingSession'));
+    }
+
+    public function edit(Workspace $workspace, TrainingSession $trainingSession)
+    {
+        Gate::authorize('manageTrainingSessions', $workspace);
+        abort_unless($trainingSession->workspace_id === $workspace->id, 404);
+
+        return view('training-sessions.edit', compact('workspace', 'trainingSession'));
+    }
+
+    public function update(TrainingSessionRequest $request, Workspace $workspace, TrainingSession $trainingSession)
+    {
+        Gate::authorize('manageTrainingSessions', $workspace);
+
+        $trainingSession->update($request->validated());
+
+        return redirect()->route('training-sessions.show', [$workspace, $trainingSession]);
+    }
+
+    public function destroy(Workspace $workspace, TrainingSession $trainingSession)
+    {
+        Gate::authorize('manageTrainingSessions', $workspace);
+
+        abort_unless($trainingSession->workspace_id === $workspace->id, 404);
+
+        $trainingSession->delete();
+
+        return redirect()->route('workspaces.show', $workspace);
     }
 }

@@ -49,8 +49,19 @@
 
                 <div class="mt-6 space-y-3">
                     @forelse ($students as $student)
-                        <div class="rounded-xl border border-slate-200 px-4 py-3 text-slate-800">
-                            {{ $student->name }}
+                        <div class="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3">
+                            <span class="text-slate-800">{{ $student->name }}</span>
+
+                            <form method="POST"
+                                action="{{ route('workspaces.students.destroy', [$workspace, $student]) }}"
+                                onsubmit="return confirm('¿Eliminar a este alumno?')">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="text-sm font-semibold text-red-700 hover:text-red-900">
+                                    Eliminar
+                                </button>
+                            </form>
                         </div>
                     @empty
                         <p class="text-sm text-slate-500">

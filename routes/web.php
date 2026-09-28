@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('workspaces', WorkspaceController::class);
-    Route::resource('workspaces.students', StudentController::class)->only(['create', 'store']);
+    Route::resource('workspaces.students', StudentController::class)->only(['create', 'store', 'destroy']);
 });
 
 require __DIR__.'/auth.php';

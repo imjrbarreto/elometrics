@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStudentRequest;
+use App\Models\Student;
 use App\Models\Workspace;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
@@ -66,8 +67,15 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Workspace $workspace, Student $student)
     {
-        //
+        Gate::authorize('manageStudents', $workspace);
+
+        abort_unless($student->workspace_id === $workspace->id, 404);
+
+        $student->delete();
+
+        return redirect()->route('workspaces.show', $workspace);
+
     }
 }

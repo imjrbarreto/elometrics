@@ -85,7 +85,8 @@
 
                 <div class="mt-6 grid gap-4 sm:grid-cols-2">
                     @forelse ($trainingSessions as $trainingSession)
-                        <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <a href="{{ route('training-sessions.show', [$workspace, $trainingSession]) }}"
+                            class="block rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-300 hover:shadow-md">
                             <p class="text-sm font-medium text-indigo-600">
                                 {{ $trainingSession->date->format('d/m/Y') }}
                             </p>
@@ -99,11 +100,11 @@
                                     {{ \Illuminate\Support\Str::limit($trainingSession->summary, 120) }}
                                 </p>
                             @endif
-                        </article>
-                    @empty
-                        <p class="text-sm text-slate-500">
-                            Todavía no hay sesiones en este workspace.
-                        </p>
+                            </a>
+                        @empty
+                            <p class="text-sm text-slate-500">
+                                Todavía no hay sesiones en este workspace.
+                            </p>
                     @endforelse
                 </div>
             </section>

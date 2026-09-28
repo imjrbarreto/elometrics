@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('workspaces.students', StudentController::class)->only(['create', 'store', 'destroy']);
     Route::get('/workspaces/{workspace}/training-sessions/create', [TrainingSessionController::class, 'create'])->name('training-sessions.create');
     Route::post('/workspaces/{workspace}/training-sessions', [TrainingSessionController::class, 'store'])->name('training-sessions.store');
+    Route::get('/workspaces/{workspace}/training-sessions/{trainingSession}', [TrainingSessionController::class, 'show'])->name('training-sessions.show');
 });
 
 require __DIR__.'/auth.php';

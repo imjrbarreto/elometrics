@@ -49,7 +49,9 @@ class WorkspaceController extends Controller
     {
         Gate::authorize('show', $workspace);
 
-        return view('workspaces.show', compact('workspace'));
+        $students = $workspace->students()->orderBy('name')->get();
+
+        return view('workspaces.show', compact('workspace', 'students'));
     }
 
     /**

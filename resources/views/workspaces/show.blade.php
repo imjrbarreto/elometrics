@@ -40,6 +40,22 @@
                     </form>
                 </div>
             </div>
+
+            <section class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+                <h2 class="text-xl font-bold text-slate-900">Alumnos</h2>
+
+                <div class="mt-6 space-y-3">
+                    @forelse ($students as $student)
+                        <div class="rounded-xl border border-slate-200 px-4 py-3 text-slate-800">
+                            {{ $student->name }}
+                        </div>
+                    @empty
+                        <p class="text-sm text-slate-500">
+                            Este workspace todavía no tiene alumnos.
+                        </p>
+                    @endforelse
+                </div>
+            </section>
         </div>
     </div>
 </x-app-layout>

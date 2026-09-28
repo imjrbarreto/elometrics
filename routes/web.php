@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TrainingSessionController;
 use App\Http\Controllers\WorkspaceController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::resource('workspaces', WorkspaceController::class);
     Route::resource('workspaces.students', StudentController::class)->only(['create', 'store', 'destroy']);
+    Route::get('/workspaces/{workspace}/training-sessions/create', [TrainingSessionController::class, 'create'])->name('training-sessions.create');
+    Route::post('/workspaces/{workspace}/training-sessions', [TrainingSessionController::class, 'store'])->name('training-sessions.store');
 });
 
 require __DIR__.'/auth.php';

@@ -70,6 +70,19 @@
                     @endforelse
                 </div>
             </section>
+
+            <section class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-semibold">Sesiones</h2>
+
+                    @can('manageTrainingSessions', $workspace)
+                        <a href="{{ route('training-sessions.create', $workspace) }}"
+                            class="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-indigo-700">
+                            Nueva sesión
+                        </a>
+                    @endcan
+                </div>
+            </section>
         </div>
     </div>
 </x-app-layout>

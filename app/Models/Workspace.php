@@ -19,4 +19,9 @@ class Workspace extends Model
     {
         return $this->hasMany(Student::class);
     }
+
+    public function trainingSessions(): HasMany
+    {
+        return $this->hasMany(TrainingSession::class);
+    }
 }

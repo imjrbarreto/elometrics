@@ -82,6 +82,30 @@
                         </a>
                     @endcan
                 </div>
+
+                <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                    @forelse ($trainingSessions as $trainingSession)
+                        <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                            <p class="text-sm font-medium text-indigo-600">
+                                {{ $trainingSession->date->format('d/m/Y') }}
+                            </p>
+
+                            <h3 class="mt-2 text-lg font-semibold text-slate-900">
+                                {{ $trainingSession->title }}
+                            </h3>
+
+                            @if ($trainingSession->summary)
+                                <p class="mt-3 text-sm text-slate-600">
+                                    {{ \Illuminate\Support\Str::limit($trainingSession->summary, 120) }}
+                                </p>
+                            @endif
+                        </article>
+                    @empty
+                        <p class="text-sm text-slate-500">
+                            Todavía no hay sesiones en este workspace.
+                        </p>
+                    @endforelse
+                </div>
             </section>
         </div>
     </div>

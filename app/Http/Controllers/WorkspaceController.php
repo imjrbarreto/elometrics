@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreWorkspaceRequest;
 use App\Http\Requests\UpdateWorkspaceRequest;
+use App\Models\TrainingSession;
 use App\Models\Workspace;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
@@ -51,7 +52,9 @@ class WorkspaceController extends Controller
 
         $students = $workspace->students()->orderBy('name')->get();
 
-        return view('workspaces.show', compact('workspace', 'students'));
+        $trainingSessions = $workspace->trainingSessions()->orderByDesc('date')->get();
+
+        return view('workspaces.show', compact('workspace', 'students', 'trainingSessions'));
     }
 
     /**

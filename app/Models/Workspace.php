@@ -2,14 +2,23 @@
 
 namespace App\Models;
 
+use App\Enums\WorkspaceStatus;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['title'])]
+#[Fillable(['title', 'status'])]
 class Workspace extends Model
 {
+
+    protected function casts(): array
+    {
+        return [
+            'status' => WorkspaceStatus::class,
+        ];
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

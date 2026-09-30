@@ -25,7 +25,7 @@
                     </a>
                 </div>
 
-                <div class="mt-10 border-t border-slate-100 pt-6">
+                <div class="mt-10 border-t border-slate-100 pt-6 flex items-start justify-between">
                     <form action="{{ route('workspaces.destroy', $workspace) }}" method="POST"
                         onsubmit="return confirm('¿Eliminar este workspace?')">
                         @csrf
@@ -36,6 +36,9 @@
                             Eliminar workspace
                         </button>
                     </form>
+                    <p class="mt-3 text-sm text-slate-500">
+                         Estado: <span class="{{ $workspace->status->color() }}">{{ __($workspace->status->label()) }}</span>
+                     </p>
                 </div>
             </div>
 

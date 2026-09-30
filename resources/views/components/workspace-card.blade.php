@@ -20,7 +20,13 @@
         Alumnos: <span class="font-semibold text-slate-800">{{ $workspace->students_count }}</span>
     </p>
 
-    <p class="mt-2 text-sm text-slate-500">
-        Creado el {{ $workspace->created_at->format('d/m/Y') }}
-    </p>
+    <div class="flex items-start justify-between gap-4">
+        <p class="mt-2 text-sm text-slate-500">
+            Creado el {{ $workspace->created_at->format('d/m/Y') }}
+        </p>
+    
+        <p class="{{ $workspace->status->color() }} mt-2 text-sm font-bold">
+            {{ $workspace->status->label() }}
+        </p>
+    </div>
 </a>

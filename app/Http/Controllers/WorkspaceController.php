@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\WorkspaceStatus;
 use App\Http\Requests\WorkspaceRequest;
 use App\Models\Workspace;
 use Illuminate\Support\Facades\Gate;
@@ -48,7 +49,7 @@ class WorkspaceController extends Controller
     {
         Gate::authorize('show', $workspace);
 
-        $students = $workspace->students()->orderBy('name')->get();
+        $students = $workspace->students()->get();
 
         $trainingSessions = $workspace->trainingSessions()->orderByDesc('date')->get();
 
@@ -62,7 +63,10 @@ class WorkspaceController extends Controller
     {
         Gate::authorize('update', $workspace);
 
-        return view('workspaces.edit', compact('workspace'));
+        return view('workspaces.edit', [
+            'workspace' => $workspace,
+            'statuses' => WorkspaceStatus::cases(),
+        ]);
     }
 
     /**

@@ -22,9 +22,18 @@ enum WorkspaceStatus: string
     {
         return match($this) 
         {
+            self::ACTIVE => 'bg-green-500',
+            self::PAUSED => 'bg-amber-500',
+            self::ARCHIVED => 'bg-gray-500',
+        };
+    }
+    public function labelColor(): string 
+    {
+        return match($this) 
+        {
             self::ACTIVE => 'text-green-500',
-            self::PAUSED => 'text-yellow-500',
-            self::ARCHIVED => 'text-red-500',
+            self::PAUSED => 'text-amber-500',
+            self::ARCHIVED => 'text-gray-500',
         };
     }
 }

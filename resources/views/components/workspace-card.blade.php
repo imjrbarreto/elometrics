@@ -25,8 +25,9 @@
             Creado el {{ $workspace->created_at->format('d/m/Y') }}
         </p>
     
-        <p class="{{ $workspace->status->color() }} mt-2 text-sm font-bold">
+        {{-- <p class="{{ $workspace->status->color() }} mt-2 text-sm font-bold">
             {{ $workspace->status->label() }}
-        </p>
+        </p> --}}
+        <div class="{{ $workspace->status->color() }} w-4 h-4 rounded-full inline-block"></div>
     </div>
 </a>

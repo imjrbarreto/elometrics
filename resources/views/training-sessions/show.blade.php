@@ -7,13 +7,21 @@
             </a>
 
             <article class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-                <p class="text-sm font-medium text-indigo-600">
-                    {{ $trainingSession->date->format('d/m/Y') }}
-                </p>
-
-                <h1 class="mt-2 text-2xl font-bold text-slate-900">
-                    {{ $trainingSession->title }}
-                </h1>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-indigo-600">
+                            {{ $trainingSession->date->format('d/m/Y') }}
+                        </p>
+        
+                        <h1 class="mt-2 text-2xl font-bold text-slate-900">
+                            {{ $trainingSession->title }}
+                        </h1>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="{{ $trainingSession->status->color() }} w-4 h-4 rounded-full inline-block"></div>
+                        <p class="text-slate-500">{{ $trainingSession->status->label() }}</p>
+                    </div>
+                </div>
 
                 <div class="mt-8 border-t border-slate-200 pt-6">
                     <h2 class="font-semibold text-slate-900">Resumen</h2>

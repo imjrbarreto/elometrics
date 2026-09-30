@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\SessionStatus;
 use App\Http\Requests\TrainingSessionRequest;
+use App\Http\Requests\StoreTrainingSessionRequest;
 use App\Models\TrainingSession;
 use App\Models\Workspace;
 use Illuminate\Support\Facades\Gate;
@@ -39,10 +41,14 @@ class TrainingSessionController extends Controller
         Gate::authorize('manageTrainingSessions', $workspace);
         abort_unless($trainingSession->workspace_id === $workspace->id, 404);
 
-        return view('training-sessions.edit', compact('workspace', 'trainingSession'));
+        return view('training-sessions.edit', [
+            'workspace' => $workspace,
+            'trainingSession' => $trainingSession,
+            'statuses' => SessionStatus::cases(),
+        ]);
     }
 
-    public function update(TrainingSessionRequest $request, Workspace $workspace, TrainingSession $trainingSession)
+    public function update(StoreTrainingSessionRequest $request, Workspace $workspace, TrainingSession $trainingSession)
     {
         Gate::authorize('manageTrainingSessions', $workspace);
 

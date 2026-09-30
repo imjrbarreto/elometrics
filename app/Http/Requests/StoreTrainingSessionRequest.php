@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class TrainingSessionRequest extends FormRequest
+class StoreTrainingSessionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,6 @@ class TrainingSessionRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'date' => ['required', 'date_format:Y-m-d'],
             'summary' => ['nullable', 'string', 'max:255'],
             'status' => ['required', Rule::enum(SessionStatus::class)],
         ];

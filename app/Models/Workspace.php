@@ -4,9 +4,11 @@ namespace App\Models;
 
 use App\Enums\WorkspaceStatus;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
 
 #[Fillable(['title', 'status'])]
 class Workspace extends Model
@@ -18,6 +20,13 @@ class Workspace extends Model
             'status' => WorkspaceStatus::class,
         ];
     }
+
+    #[Scope]
+    protected function withStudentsSummary(Builder $query): void
+    {
+        $query->withCount('students')->latest();
+    }
+
 
     public function user(): BelongsTo
     {

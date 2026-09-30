@@ -37,7 +37,7 @@
                         </button>
                     </form>
                     <p class="mt-3 text-sm text-slate-500">
-                         Estado: <span class="{{ $workspace->status->color() }}">{{ __($workspace->status->label()) }}</span>
+                         Estado: <span class="{{ $workspace->status->labelColor() }}">{{ __($workspace->status->label()) }}</span>
                      </p>
                 </div>
             </div>
@@ -90,20 +90,25 @@
                     @forelse ($trainingSessions as $trainingSession)
                         <a href="{{ route('training-sessions.show', [$workspace, $trainingSession]) }}"
                             class="block rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-300 hover:shadow-md">
-                            <p class="text-sm font-medium text-indigo-600">
-                                {{ __($trainingSession->date->format('d/m/Y')) }}
-                            </p>
-
-                            <h3 class="mt-2 text-lg font-semibold text-slate-900">
-                                {{ __($trainingSession->title) }}
-                            </h3>
-
-                            @if ($trainingSession->summary)
-                                <p class="mt-3 text-sm text-slate-600">
-                                    {{ __($trainingSession->summary) }}
-                                </p>
-                            @endif
-                            </a>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-indigo-600">
+                                        {{ __($trainingSession->date->format('d/m/Y')) }}
+                                    </p>
+        
+                                    <h3 class="mt-2 text-lg font-semibold text-slate-900">
+                                        {{ __($trainingSession->title) }}
+                                    </h3>
+        
+                                    @if ($trainingSession->summary)
+                                        <p class="mt-3 text-sm text-slate-600">
+                                            {{ __($trainingSession->summary) }}
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="{{ $trainingSession->status->color() }} w-4 h-4 rounded-full inline-block"></div>
+                            </div>
+                        </a>
                         @empty
                             <p class="text-sm text-slate-500">
                                 Todavía no hay sesiones en este workspace.

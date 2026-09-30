@@ -27,14 +27,14 @@
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
 
-                    <label for="date" class="block text-sm font-medium text-slate-700">
+                    {{-- <label for="date" class="block text-sm font-medium text-slate-700">
                         Fecha
                     </label>
                     <input id="date" name="date" type="date" required value="{{ old('date') }}"
                         class="mt-2 block w-full rounded-xl border-slate-300">
                     @error('date')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                    @enderror --}}
 
                     <label for="summary" class="block text-sm font-semibold text-slate-700">Summary</label>
                     <input id="summary" name="summary" type="text"
@@ -42,6 +42,18 @@
                         class="mt-2 block w-full rounded-xl border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     @error('summary')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+
+                    <label for="status" class="block text-sm font-semibold text-slate-700">Estado</label>
+                    <select id="status" name="status">
+                        @foreach ($statuses as $status)
+                            <option value="{{ $status->value }}" @selected(old('status', $trainingSession->status?->value ?? $trainingSession->status) == $status->value)>
+                                {{ $status->label() }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('status')
+                        <p>{{ $message }}</p>
                     @enderror
 
                     <div class="mt-8 flex flex-wrap items-center gap-4">

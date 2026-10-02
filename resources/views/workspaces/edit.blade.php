@@ -2,7 +2,7 @@
     <div class="min-h-screen bg-slate-50 py-10">
         <div class="mx-auto max-w-2xl px-4 sm:px-6">
             <a href="{{ route('workspaces.show', $workspace) }}"
-               class="text-sm font-medium text-indigo-600 hover:text-indigo-800">
+                class="text-sm font-medium text-indigo-600 hover:text-indigo-800">
                 ← Volver al workspace
             </a>
 
@@ -14,35 +14,38 @@
                     Cambia el título de tu espacio de trabajo.
                 </p>
 
-                <form action="{{ route('workspaces.update', $workspace) }}"
-                      method="POST"
-                      class="mt-8">
+                <form action="{{ route('workspaces.update', $workspace) }}" method="POST" class="mt-8">
                     @csrf
                     @method('PATCH')
 
-                    <label for="title" class="block text-sm font-semibold text-slate-700">
-                        Título
-                    </label>
-
-                    <input id="title"
-                           name="title"
-                           type="text"
-                           value="{{ old('title', $workspace->title) }}"
-                           required
-                           class="mt-2 block w-full rounded-xl border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-
+                    <label for="title" class="block text-sm font-semibold text-slate-700">Título</label>
+                    <input id="title" name="title" type="text" value="{{ old('title', $workspace->title) }}"
+                        required
+                        class="mt-2 block w-full rounded-xl border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     @error('title')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
+                    <label for="status" class="block text-sm font-semibold text-slate-700">Estado</label>
+                        <select id="status" name="status">
+                            @foreach ($statuses as $status)
+                                <option value="{{ $status->value }}" @selected(old('status', $workspace->status?->value ?? $workspace->status) == $status->value)>
+                                    {{ $status->label() }}
+                                </option>
+                            @endforeach
+                        </select>
+                    @error('status')
+                        <p>{{ $message }}</p>
+                    @enderror
+
 
                     <div class="mt-8 flex flex-wrap items-center gap-4">
                         <button type="submit"
-                                class="rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white hover:bg-indigo-700">
+                            class="rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white hover:bg-indigo-700">
                             Guardar cambios
                         </button>
 
                         <a href="{{ route('workspaces.show', $workspace) }}"
-                           class="font-medium text-slate-600 hover:text-slate-900">
+                            class="font-medium text-slate-600 hover:text-slate-900">
                             Cancelar
                         </a>
                     </div>

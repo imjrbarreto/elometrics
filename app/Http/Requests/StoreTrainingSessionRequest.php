@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\SessionStatus;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UpdateWorkspaceRequest extends FormRequest
+class StoreTrainingSessionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,6 +26,8 @@ class UpdateWorkspaceRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
+            'summary' => ['nullable', 'string', 'max:255'],
+            'status' => ['required', Rule::enum(SessionStatus::class)],
         ];
     }
 }

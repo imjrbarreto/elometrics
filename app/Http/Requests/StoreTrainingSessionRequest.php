@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\SessionStatus;
+use App\Enums\TrainingSessionCategory;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -28,6 +29,8 @@ class StoreTrainingSessionRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'summary' => ['nullable', 'string', 'max:255'],
             'status' => ['required', Rule::enum(SessionStatus::class)],
+            'category' => ['nullable', Rule::enum(TrainingSessionCategory::class)],
+            'resource_url' => ['nullable', 'url:https', 'max:2048'],
         ];
     }
 }

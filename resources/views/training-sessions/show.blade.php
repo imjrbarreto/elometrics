@@ -12,7 +12,7 @@
                         <p class="text-sm font-medium text-indigo-600">
                             {{ $trainingSession->date->format('d/m/Y') }}
                         </p>
-        
+
                         <h1 class="mt-2 text-2xl font-bold text-slate-900">
                             {{ $trainingSession->title }}
                         </h1>
@@ -33,20 +33,40 @@
                     @endif
                 </div>
 
-                <a href="{{ route('training-sessions.edit', [$workspace, $trainingSession]) }}"
-                    class="inline-flex justify-center rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white hover:bg-indigo-700">
-                    Editar Sesion
-                </a>
+                <div class="mt-2 pt-6">
+                    @if ($trainingSession->category)
+                    
+                        <span
+                            class="inline-flex rounded-full bg-emerald-100 px-3 py-1 text-sm font-medium text-emerald-800">
+                            {{ $trainingSession->category->label() }}
+                        </span>
+                    @endif
+    
+                    @if ($trainingSession->resource_url)
+                        <a href="{{ $trainingSession->resource_url }}" target="_blank" rel="noopener noreferrer"
+                            class="inline-flex text-sm font-medium text-emerald-700 underline">
+                            Abrir material ↗
+                        </a>
+                    @endif
+                </div>
 
-                <form method="POST" action="{{ route('training-sessions.destroy', [$workspace, $trainingSession]) }}"
-                    onsubmit="return confirm('¿Eliminar a esta sesion?')">
-                    @csrf
-                    @method('DELETE')
-
-                    <button type="submit" class="text-sm font-semibold text-red-700 hover:text-red-900">
-                        Eliminar
-                    </button>
-                </form>
+                <div class="mt-8 border-t border-slate-200 pt-6 flex items-center gap-4">
+                    
+                    <a href="{{ route('training-sessions.edit', [$workspace, $trainingSession]) }}"
+                        class="inline-flex justify-center rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white hover:bg-indigo-700">
+                        Editar Sesion
+                    </a>
+    
+                    <form method="POST" action="{{ route('training-sessions.destroy', [$workspace, $trainingSession]) }}"
+                        onsubmit="return confirm('¿Eliminar a esta sesion?')">
+                        @csrf
+                        @method('DELETE')
+    
+                        <button type="submit" class="text-sm font-semibold text-red-700 hover:text-red-900">
+                            Eliminar
+                        </button>
+                    </form>
+                </div>
             </article>
         </div>
     </div>

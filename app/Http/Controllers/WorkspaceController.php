@@ -15,9 +15,11 @@ class WorkspaceController extends Controller
      */
     public function index(Request $request)
     {
-        $workspaces = $request->user()->workspaces()->withStudentsSummary()->get();
+        $status = $request->enum('status', WorkspaceStatus::class);
 
-        return view('workspaces.index', compact('workspaces'));
+        $workspaces = $request->user()->workspaces()->withStudentsSummary()->filterByStatus($status)->get();
+
+        return view('workspaces.index', compact('workspaces', 'status'));
     }
 
     /**

@@ -12,6 +12,9 @@
                     </p>
                 </div>
 
+                <div>
+                    
+                </div>
                 <a
                     href="{{ route('workspaces.create') }}"
                     class="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-indigo-700"

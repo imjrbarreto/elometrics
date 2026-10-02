@@ -27,6 +27,15 @@ class Workspace extends Model
         $query->withCount('students')->latest();
     }
 
+    #[Scope]
+    protected function filterByStatus(Builder $query, ?WorkspaceStatus $status = null): void
+    {
+        if($status)
+            {
+                $query->where('status', $status);
+            }
+    }
+
 
     public function user(): BelongsTo
     {

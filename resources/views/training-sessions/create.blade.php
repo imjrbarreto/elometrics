@@ -52,7 +52,7 @@
                         <select id="category" name="category" class="mt-1 block w-full rounded-md border-slate-300">
                             <option value="">Sin categoría</option>
 
-                            @foreach (\App\Enums\TrainingSessionCategory::cases() as $category)
+                            @foreach ($categories as $category)
                                 <option value="{{ $category->value }}" @selected(old('category') === $category->value)>
                                     {{ $category->label() }}
                                 </option>

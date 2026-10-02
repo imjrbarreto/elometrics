@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\SessionStatus;
+use App\Enums\TrainingSessionCategory;
 use App\Http\Requests\TrainingSessionRequest;
 use App\Http\Requests\StoreTrainingSessionRequest;
 use App\Models\TrainingSession;
@@ -15,7 +16,10 @@ class TrainingSessionController extends Controller
     {
         Gate::authorize('manageTrainingSessions', $workspace);
 
-        return view('training-sessions.create', compact('workspace'));
+        return view('training-sessions.create', [
+            'workspace' => $workspace,
+            'categories' => TrainingSessionCategory::cases(),
+        ]);
     }
 
     public function store(TrainingSessionRequest $request, Workspace $workspace)
@@ -24,7 +28,7 @@ class TrainingSessionController extends Controller
 
         $workspace->trainingSessions()->create($request->validated());
 
-        return redirect()->route('workspaces.show', $workspace)->with('success', 'Sesion creada correctamente.');
+        return redirect()->route('workspaces.show', $workspace);
     }
 
     public function show(Workspace $workspace, TrainingSession $trainingSession)
@@ -44,7 +48,8 @@ class TrainingSessionController extends Controller
         return view('training-sessions.edit', [
             'workspace' => $workspace,
             'trainingSession' => $trainingSession,
-            'statuses' => SessionStatus::cases(),
+            'statuses' => SessionStatus::cases(),   
+            'categories' => TrainingSessionCategory::cases(),
         ]);
     }
 

@@ -56,6 +56,40 @@
                         <p>{{ $message }}</p>
                     @enderror
 
+                    <div>
+                        <label for="category" class="block text-sm font-medium text-slate-700">
+                            Categoría
+                        </label>
+
+                        <select id="category" name="category" class="mt-1 block w-full rounded-md border-slate-300">
+                            <option value="">Sin categoría</option>
+
+                            @foreach (\App\Enums\TrainingSessionCategory::cases() as $category)
+                                <option value="{{ $category->value }}" @selected(old('category', $trainingSession->category?->value) === $category->value)>
+                                    {{ $category->label() }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        @error('category')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="resource_url" class="block text-sm font-medium text-slate-700">
+                            Enlace al material
+                        </label>
+
+                        <input type="url" id="resource_url" name="resource_url" value="{{ old('resource_url', $trainingSession->resource_url) }}"
+                            maxlength="2048" placeholder="https://lichess.org/study/..."
+                            class="mt-1 block w-full rounded-md border-slate-300">
+
+                        @error('resource_url')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <div class="mt-8 flex flex-wrap items-center gap-4">
                         <button type="submit"
                             class="rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white hover:bg-indigo-700">

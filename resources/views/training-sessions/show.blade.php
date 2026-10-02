@@ -12,7 +12,7 @@
                         <p class="text-sm font-medium text-indigo-600">
                             {{ $trainingSession->date->format('d/m/Y') }}
                         </p>
-        
+
                         <h1 class="mt-2 text-2xl font-bold text-slate-900">
                             {{ $trainingSession->title }}
                         </h1>
@@ -32,6 +32,20 @@
                         <p class="mt-3 text-slate-500">Aún no hay un resumen para esta sesión.</p>
                     @endif
                 </div>
+
+                @if ($trainingSession->category)
+                    <span
+                        class="inline-flex rounded-full bg-emerald-100 px-3 py-1 text-sm font-medium text-emerald-800">
+                        {{ $trainingSession->category->label() }}
+                    </span>
+                @endif
+
+                @if ($trainingSession->resource_url)
+                    <a href="{{ $trainingSession->resource_url }}" target="_blank" rel="noopener noreferrer"
+                        class="inline-flex text-sm font-medium text-emerald-700 underline">
+                        Abrir material ↗
+                    </a>
+                @endif
 
                 <a href="{{ route('training-sessions.edit', [$workspace, $trainingSession]) }}"
                     class="inline-flex justify-center rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white hover:bg-indigo-700">

@@ -45,16 +45,19 @@
             <section class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
                 <h2 class="text-xl font-bold text-slate-900">Alumnos</h2>
 
+                @can('manageStudents', $workspace)
                 <a href="{{ route('workspaces.students.create', $workspace) }}"
                     class="text-sm font-semibold text-indigo-600 hover:text-indigo-800">
                     + Añadir alumno
                 </a>
+                @endcan
 
                 <div class="mt-6 space-y-3">
                     @forelse ($students as $student)
                         <div class="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3">
                             <span class="text-slate-800">{{ __($student->name) }}</span>
 
+                            @can('manageStudents', $workspace)
                             <form method="POST"
                                 action="{{ route('workspaces.students.destroy', [$workspace, $student]) }}"
                                 onsubmit="return confirm('¿Eliminar a este alumno?')">
@@ -65,6 +68,7 @@
                                     Eliminar
                                 </button>
                             </form>
+                            @endcan
                         </div>
                     @empty
                         <p class="text-sm text-slate-500">

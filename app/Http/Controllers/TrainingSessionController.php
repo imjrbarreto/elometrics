@@ -33,7 +33,7 @@ class TrainingSessionController extends Controller
 
     public function show(Workspace $workspace, TrainingSession $trainingSession)
     {
-        Gate::authorize('manageTrainingSessions', $workspace);
+        Gate::authorize('show', $workspace);
 
         abort_unless($trainingSession->workspace_id === $workspace->id, 404);
 

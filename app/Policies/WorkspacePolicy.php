@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\WorkspaceRole;
 use App\Models\User;
 use App\Models\Workspace;
 use Illuminate\Auth\Access\Response;
@@ -13,7 +14,7 @@ class WorkspacePolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +22,7 @@ class WorkspacePolicy
      */
     public function show(User $user, Workspace $workspace): bool
     {
-        return $workspace->user_id === $user->id;
+        return $workspace->user_id === $user->id || $workspace->members()->where('user_id', $user->id)->exists();
     }
 
     /**
@@ -64,12 +65,18 @@ class WorkspacePolicy
         return false;
     }
 
+    private function isOwnerOrCoach(User $user, Workspace $workspace): bool
+    {
+        return $workspace->user_id === $user->id || $workspace->members()->where('users.id', $user->id)->wherePivot('role', WorkspaceRole::COACH->value)->exists();
+    }
+
     public function manageStudents(User $user, Workspace $workspace): bool
     {
-        return $workspace->user_id === $user->id;
+        return $this->isOwnerOrCoach($user, $workspace);
     }
+    
     public function manageTrainingSessions(User $user, Workspace $workspace): bool
     {
-        return $workspace->user_id === $user->id;
+        return $this->isOwnerOrCoach($user, $workspace);
     }
 }

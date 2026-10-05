@@ -8,6 +8,7 @@ use App\Models\Workspace;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Gate;
 
 class WorkspaceMemberController extends Controller
 {
@@ -36,5 +37,16 @@ class WorkspaceMemberController extends Controller
         ]);
 
         return redirect()->route('workspaces.show', $workspace);
-        }
+    }
+
+    public function destroy(Workspace $workspace, User $member): RedirectResponse
+    {
+        Gate::authorize('manageMembers', $workspace);
+
+        abort_unless($workspace->members()->where('users.id', $member->id)->exists(), 404);
+
+        $workspace->members()->detach($member->id);
+
+        return redirect()->route('workspaces.show', $workspace);
+    }
 }

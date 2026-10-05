@@ -75,13 +75,15 @@
                 @endcan
 
                 <section class="rounded-xl bg-white p-6 shadow-sm">
-                    <h2 class="mb-2 text-lg font-semibold text-gray-900">
-                        Propietario
-                    </h2>
-                    <div class="mb-4">
-                        {{ $workspace->user->username }}
+                    <div class="border-b">
+                        <h2 class="mb-2 text-lg font-semibold text-gray-900 ">
+                            Propietario
+                        </h2>
+                        <div class="mb-4">
+                            {{ $workspace->user->username }}
+                        </div>
                     </div>
-                    <h2 class="mb-4 text-lg font-semibold text-gray-900">
+                    <h2 class="mb-2 text-lg font-semibold text-gray-900">
                         Miembros
                     </h2>
 
@@ -96,6 +98,21 @@
                                     {{ $member->pivot->role }}
                                 </p>
                             </div>
+                            @can('manageMembers', $workspace)
+                                <form method="POST"
+                                    action="{{ route('workspaces.members.destroy', [
+                                        'workspace' => $workspace,
+                                        'member' => $member,
+                                    ]) }}"
+                                    onsubmit="return confirm('¿Retirar a este miembro del workspace?')">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <x-danger-button>
+                                        Retirar
+                                    </x-danger-button>
+                                </form>
+                            @endcan
                         </div>
                     @empty
                         <p class="text-sm text-gray-600">

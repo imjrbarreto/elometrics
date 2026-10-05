@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/workspaces/{workspace}/training-sessions/{trainingSession}', [TrainingSessionController::class, 'update'])->name('training-sessions.update');
     Route::delete('/workspaces/{workspace}/training-sessions/{trainingSession}', [TrainingSessionController::class, 'destroy'])->name('training-sessions.destroy');
     Route::post('workspaces/{workspace}/members', [WorkspaceMemberController::class, 'store'])->name('workspaces.members.store');
+    Route::delete('workspaces/{workspace}/members/{member}', [WorkspaceMemberController::class, 'destroy'])->name('workspaces.members.destroy');
+
 });
 
 require __DIR__.'/auth.php';

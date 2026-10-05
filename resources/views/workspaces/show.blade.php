@@ -19,13 +19,64 @@
                         </p>
                     </div>
 
+                    @can('manageMembers', $workspace)
                     <a href="{{ route('workspaces.edit', $workspace) }}"
                         class="inline-flex justify-center rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white hover:bg-indigo-700">
                         Editar workspace
                     </a>
+                    @endcan
                 </div>
 
+                @can('manageMembers', $workspace)
+                    <section class="rounded-xl bg-white p-6 shadow-sm">
+                        <h2 class="mb-4 text-lg font-semibold text-gray-900">
+                            Añadir miembro
+                        </h2>
+
+                        <form method="POST" action="{{ route('workspaces.members.store', $workspace) }}" class="space-y-4">
+                            @csrf
+
+                            <div>
+                                <x-input-label for="member_username" value="Username" />
+
+                                <x-text-input id="member_username" name="username" type="text" class="mt-1 block w-full"
+                                    :value="old('username')" required />
+
+                                <x-input-error :messages="$errors->get('username')" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="member_role" value="Rol" />
+
+                                <select id="member_role" name="role"
+                                    class="mt-1 block w-full rounded-md border-gray-300
+                           shadow-sm focus:border-indigo-500
+                           focus:ring-indigo-500"
+                                    required>
+                                    <option value="student" @selected(old('role', 'student') === 'student')>
+                                        Alumno
+                                    </option>
+                                    <option value="coach" @selected(old('role', 'student') === 'coach')>
+                                        Entrenador
+                                    </option>
+                                    <option value="viewer" @selected(old('role', 'student') === 'viewer')>
+                                        Observador
+                                    </option>
+                                </select>
+
+                                <x-input-error :messages="$errors->get('role')" class="mt-2" />
+                            </div>
+
+                            <x-primary-button>
+                                Añadir miembro
+                            </x-primary-button>
+                        </form>
+                    </section>
+                @endcan
+
                 <div class="mt-10 border-t border-slate-100 pt-6 flex items-start justify-between">
+                    
+                    @can('manageMembers', $workspace)
                     <form action="{{ route('workspaces.destroy', $workspace) }}" method="POST"
                         onsubmit="return confirm('¿Eliminar este workspace?')">
                         @csrf
@@ -36,9 +87,11 @@
                             Eliminar workspace
                         </button>
                     </form>
+                    @endcan
                     <p class="mt-3 text-sm text-slate-500">
-                         Estado: <span class="{{ $workspace->status->labelColor() }}">{{ __($workspace->status->label()) }}</span>
-                     </p>
+                        Estado: <span
+                            class="{{ $workspace->status->labelColor() }}">{{ __($workspace->status->label()) }}</span>
+                    </p>
                 </div>
             </div>
 
@@ -46,10 +99,10 @@
                 <h2 class="text-xl font-bold text-slate-900">Alumnos</h2>
 
                 @can('manageStudents', $workspace)
-                <a href="{{ route('workspaces.students.create', $workspace) }}"
-                    class="text-sm font-semibold text-indigo-600 hover:text-indigo-800">
-                    + Añadir alumno
-                </a>
+                    <a href="{{ route('workspaces.students.create', $workspace) }}"
+                        class="text-sm font-semibold text-indigo-600 hover:text-indigo-800">
+                        + Añadir alumno
+                    </a>
                 @endcan
 
                 <div class="mt-6 space-y-3">
@@ -58,16 +111,16 @@
                             <span class="text-slate-800">{{ __($student->name) }}</span>
 
                             @can('manageStudents', $workspace)
-                            <form method="POST"
-                                action="{{ route('workspaces.students.destroy', [$workspace, $student]) }}"
-                                onsubmit="return confirm('¿Eliminar a este alumno?')">
-                                @csrf
-                                @method('DELETE')
+                                <form method="POST"
+                                    action="{{ route('workspaces.students.destroy', [$workspace, $student]) }}"
+                                    onsubmit="return confirm('¿Eliminar a este alumno?')">
+                                    @csrf
+                                    @method('DELETE')
 
-                                <button type="submit" class="text-sm font-semibold text-red-700 hover:text-red-900">
-                                    Eliminar
-                                </button>
-                            </form>
+                                    <button type="submit" class="text-sm font-semibold text-red-700 hover:text-red-900">
+                                        Eliminar
+                                    </button>
+                                </form>
                             @endcan
                         </div>
                     @empty
@@ -99,24 +152,25 @@
                                     <p class="text-sm font-medium text-indigo-600">
                                         {{ __($trainingSession->date->format('d/m/Y')) }}
                                     </p>
-        
+
                                     <h3 class="mt-2 text-lg font-semibold text-slate-900">
                                         {{ __($trainingSession->title) }}
                                     </h3>
-        
+
                                     @if ($trainingSession->summary)
                                         <p class="mt-3 text-sm text-slate-600">
                                             {{ __($trainingSession->summary) }}
                                         </p>
                                     @endif
                                 </div>
-                                <div class="{{ $trainingSession->status->color() }} w-4 h-4 rounded-full inline-block"></div>
+                                <div class="{{ $trainingSession->status->color() }} w-4 h-4 rounded-full inline-block">
+                                </div>
                             </div>
                         </a>
-                        @empty
-                            <p class="text-sm text-slate-500">
-                                Todavía no hay sesiones en este workspace.
-                            </p>
+                    @empty
+                        <p class="text-sm text-slate-500">
+                            Todavía no hay sesiones en este workspace.
+                        </p>
                     @endforelse
                 </div>
             </section>

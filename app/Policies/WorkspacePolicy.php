@@ -79,4 +79,9 @@ class WorkspacePolicy
     {
         return $this->isOwnerOrCoach($user, $workspace);
     }
+
+    public function manageMembers(User $user, Workspace $workspace): bool
+    {
+        return $workspace->user_id === $user->id;
+    }
 }

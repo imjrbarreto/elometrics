@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/workspaces/{workspace}/training-sessions/{trainingSession}', [TrainingSessionController::class, 'destroy'])->name('training-sessions.destroy');
     Route::post('workspaces/{workspace}/members', [WorkspaceMemberController::class, 'store'])->name('workspaces.members.store');
     Route::delete('workspaces/{workspace}/members/{member}', [WorkspaceMemberController::class, 'destroy'])->name('workspaces.members.destroy');
-
+    Route::delete('workspaces/{workspace}/membership', [WorkspaceMemberController::class, 'leave'])->name('workspaces.members.leave');
 });
 
 require __DIR__.'/auth.php';

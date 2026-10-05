@@ -120,6 +120,17 @@
                         </p>
                     @endforelse
                 </section>
+                @can('leave', $workspace)
+                    <form method="POST" action="{{ route('workspaces.members.leave', $workspace) }}"
+                        onsubmit="return confirm('¿Salir de este workspace?')">
+                        @csrf
+                        @method('DELETE')
+
+                        <x-danger-button>
+                            Salir del workspace
+                        </x-danger-button>
+                    </form>
+                @endcan
 
                 <div class="mt-10 border-t border-slate-100 pt-6 flex items-start justify-between">
 

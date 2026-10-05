@@ -49,4 +49,13 @@ class WorkspaceMemberController extends Controller
 
         return redirect()->route('workspaces.show', $workspace);
     }
+
+    public function leave(Request $request, Workspace $workspace): RedirectResponse
+    {
+        Gate::authorize('leave', $workspace);
+
+        $workspace->members()->detach($request->user()->id);
+
+        return redirect()->route('workspaces.index');
+    }
 }

@@ -84,4 +84,9 @@ class WorkspacePolicy
     {
         return $workspace->user_id === $user->id;
     }
+
+    public function leave(User $user, Workspace $workspace): bool
+    {
+        return $workspace->user_id !== $user->id && $workspace->members()->where('users.id', $user->id)->exists();
+    }
 }

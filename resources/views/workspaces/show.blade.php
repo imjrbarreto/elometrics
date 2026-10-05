@@ -20,10 +20,10 @@
                     </div>
 
                     @can('manageMembers', $workspace)
-                    <a href="{{ route('workspaces.edit', $workspace) }}"
-                        class="inline-flex justify-center rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white hover:bg-indigo-700">
-                        Editar workspace
-                    </a>
+                        <a href="{{ route('workspaces.edit', $workspace) }}"
+                            class="inline-flex justify-center rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white hover:bg-indigo-700">
+                            Editar workspace
+                        </a>
                     @endcan
                 </div>
 
@@ -74,19 +74,49 @@
                     </section>
                 @endcan
 
-                <div class="mt-10 border-t border-slate-100 pt-6 flex items-start justify-between">
-                    
-                    @can('manageMembers', $workspace)
-                    <form action="{{ route('workspaces.destroy', $workspace) }}" method="POST"
-                        onsubmit="return confirm('¿Eliminar este workspace?')">
-                        @csrf
-                        @method('DELETE')
+                <section class="rounded-xl bg-white p-6 shadow-sm">
+                    <h2 class="mb-2 text-lg font-semibold text-gray-900">
+                        Propietario
+                    </h2>
+                    <div class="mb-4">
+                        {{ $workspace->user->username }}
+                    </div>
+                    <h2 class="mb-4 text-lg font-semibold text-gray-900">
+                        Miembros
+                    </h2>
 
-                        <button type="submit"
-                            class="rounded-xl border border-red-200 px-4 py-2 font-semibold text-red-700 hover:bg-red-50">
-                            Eliminar workspace
-                        </button>
-                    </form>
+                    @forelse ($workspace->members as $member)
+                        <div class="flex flex-wrap items-center justify-between gap-3 py-3">
+                            <div class="w-full flex items-center justify-between">
+                                <p class="font-medium text-gray-900">
+                                    {{ $member->username }}
+                                </p>
+
+                                <p class="text-sm text-gray-600">
+                                    {{ $member->pivot->role }}
+                                </p>
+                            </div>
+                        </div>
+                    @empty
+                        <p class="text-sm text-gray-600">
+                            Todavía no hay miembros añadidos.
+                        </p>
+                    @endforelse
+                </section>
+
+                <div class="mt-10 border-t border-slate-100 pt-6 flex items-start justify-between">
+
+                    @can('manageMembers', $workspace)
+                        <form action="{{ route('workspaces.destroy', $workspace) }}" method="POST"
+                            onsubmit="return confirm('¿Eliminar este workspace?')">
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit"
+                                class="rounded-xl border border-red-200 px-4 py-2 font-semibold text-red-700 hover:bg-red-50">
+                                Eliminar workspace
+                            </button>
+                        </form>
                     @endcan
                     <p class="mt-3 text-sm text-slate-500">
                         Estado: <span

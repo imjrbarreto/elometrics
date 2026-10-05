@@ -53,6 +53,10 @@ class WorkspaceController extends Controller
     {
         Gate::authorize('show', $workspace);
 
+        $workspace->load([
+            'members' => fn ($query) => $query->orderBy('users.username')
+        ]);
+        
         $students = $workspace->students()->get();
 
         $trainingSessions = $workspace->trainingSessions()->orderByDesc('date')->get();

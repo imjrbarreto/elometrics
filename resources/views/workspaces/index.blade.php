@@ -22,26 +22,7 @@
                     + Nuevo workspace
                 </a>
             </div>
-
-            @if ($workspaces->isEmpty())
-                <div class="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center">
-                    <div class="text-4xl">♟</div>
-
-                    <h2 class="mt-4 text-xl font-semibold text-slate-900">
-                        Todavía no tienes workspaces
-                    </h2>
-
-                    <p class="mt-2 text-slate-600">
-                        Crea el primero para empezar a organizar tu entrenamiento.
-                    </p>
-                </div>
-            @else
-                <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                    @foreach ($workspaces as $workspace)
-                        <x-workspace-card :workspace="$workspace" />
-                    @endforeach
-                </div>
-            @endif
+            <livewire:workspace-list />
         </div>
     </div>
 </x-app-layout>

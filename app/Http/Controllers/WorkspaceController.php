@@ -17,11 +17,7 @@ class WorkspaceController extends Controller
     {
         Gate::authorize('viewAny', Workspace::class);
 
-        $status = $request->enum('status', WorkspaceStatus::class);
-
-        $workspaces = Workspace::query()->accessibleTo($request->user())->withStudentsSummary()->filterByStatus($status)->get();
-
-        return view('workspaces.index', compact('workspaces', 'status'));
+        return view('workspaces.index');
     }
 
     /**

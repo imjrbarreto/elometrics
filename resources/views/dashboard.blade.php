@@ -5,10 +5,10 @@
 
             <div class="grid grid-cols-1 gap-5 sm:grid-cols-3">
                 @foreach ([
-        'Mis workspaces' => $totalWorkspaces,
-        'Mis workspaces activos' => $activeWorkspaces,
-        'Workspaces donde colaboro' => $joinedWorkspaces,
-    ] as $label => $count)
+                    'Mis workspaces' => $totalWorkspaces,
+                    'Mis workspaces activos' => $activeWorkspaces,
+                    'Workspaces donde colaboro' => $joinedWorkspaces,
+                    ] as $label => $count)
                     <div class="rounded-2xl border border-slate-200 bg-white p-6
                     shadow-sm">
 

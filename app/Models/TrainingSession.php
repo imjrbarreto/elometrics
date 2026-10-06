@@ -22,6 +22,6 @@ class TrainingSession extends Model
 
     public function workspace(): BelongsTo
     {
-        return $this->belongsTo('workspace_id');
+        return $this->belongsTo(Workspace::class, 'workspace_id');
     }
 }

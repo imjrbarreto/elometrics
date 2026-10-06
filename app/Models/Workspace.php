@@ -38,7 +38,7 @@ class Workspace extends Model
     }
 
     #[Scope]
-    protected function accesibleTo(Builder $query, User $user): void
+    protected function accessibleTo(Builder $query, User $user): void
     {
         $query->where(fn (Builder $q) =>
             $q->where('workspaces.user_id', $user->id)->orWhereHas('members', fn (Builder $members) =>

@@ -19,7 +19,7 @@ class WorkspaceController extends Controller
 
         $status = $request->enum('status', WorkspaceStatus::class);
 
-        $workspaces = Workspace::query()->accesibleTo($request->user())->withStudentsSummary()->filterByStatus($status)->get();
+        $workspaces = Workspace::query()->accessibleTo($request->user())->withStudentsSummary()->filterByStatus($status)->get();
 
         return view('workspaces.index', compact('workspaces', 'status'));
     }

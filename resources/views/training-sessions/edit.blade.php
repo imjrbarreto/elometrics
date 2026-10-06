@@ -27,14 +27,6 @@
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
 
-                    {{-- <label for="date" class="block text-sm font-medium text-slate-700">
-                        Fecha
-                    </label>
-                    <input id="date" name="date" type="date" required value="{{ old('date') }}"
-                        class="mt-2 block w-full rounded-xl border-slate-300">
-                    @error('date')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror --}}
 
                     <label for="summary" class="block text-sm font-semibold text-slate-700">Summary</label>
                     <input id="summary" name="summary" type="text"

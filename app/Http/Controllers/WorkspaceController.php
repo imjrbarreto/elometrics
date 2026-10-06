@@ -15,9 +15,11 @@ class WorkspaceController extends Controller
      */
     public function index(Request $request)
     {
+        Gate::authorize('viewAny', Workspace::class);
+
         $status = $request->enum('status', WorkspaceStatus::class);
 
-        $workspaces = $request->user()->workspaces()->withStudentsSummary()->filterByStatus($status)->get();
+        $workspaces = Workspace::query()->accesibleTo($request->user())->withStudentsSummary()->filterByStatus($status)->get();
 
         return view('workspaces.index', compact('workspaces', 'status'));
     }
@@ -51,6 +53,10 @@ class WorkspaceController extends Controller
     {
         Gate::authorize('show', $workspace);
 
+        $workspace->load([
+            'members' => fn ($query) => $query->orderBy('users.username')
+        ]);
+        
         $students = $workspace->students()->get();
 
         $trainingSessions = $workspace->trainingSessions()->orderByDesc('date')->get();

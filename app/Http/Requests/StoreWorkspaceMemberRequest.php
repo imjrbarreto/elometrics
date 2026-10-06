@@ -2,19 +2,18 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\WorkspaceStatus;
-use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Enums\WorkspaceRole;
 use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 
-class WorkspaceRequest extends FormRequest
+class StoreWorkspaceMemberRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()?->can('manageMembers', $this->route('workspace')) ?? false;
     }
 
     /**
@@ -25,8 +24,8 @@ class WorkspaceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
-            'status' => ['sometimes', Rule::enum(WorkspaceStatus::class)],
+            'username' => ['required', 'string', 'exists:users,username'],
+            'role' => ['required', Rule::enum(WorkspaceRole::class)],
         ];
     }
 }

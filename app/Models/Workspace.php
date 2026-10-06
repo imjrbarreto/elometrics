@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 #[Fillable(['title', 'status'])]
 class Workspace extends Model
@@ -36,6 +37,16 @@ class Workspace extends Model
             }
     }
 
+    #[Scope]
+    protected function accesibleTo(Builder $query, User $user): void
+    {
+        $query->where(fn (Builder $q) =>
+            $q->where('workspaces.user_id', $user->id)->orWhereHas('members', fn (Builder $members) =>
+                $members->where('users.id', $user->id)
+            )
+        );
+    }
+
 
     public function user(): BelongsTo
     {
@@ -50,5 +61,10 @@ class Workspace extends Model
     public function trainingSessions(): HasMany
     {
         return $this->hasMany(TrainingSession::class);
+    }
+
+    public function members(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'workspace_members')->withPivot('role')->withTimestamps();
     }
 }

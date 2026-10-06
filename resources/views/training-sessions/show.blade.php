@@ -50,6 +50,7 @@
                     @endif
                 </div>
 
+                @can('manageTrainingSessions', $workspace)
                 <div class="mt-8 border-t border-slate-200 pt-6 flex items-center gap-4">
                     
                     <a href="{{ route('training-sessions.edit', [$workspace, $trainingSession]) }}"
@@ -67,6 +68,7 @@
                         </button>
                     </form>
                 </div>
+                @endcan
             </article>
         </div>
     </div>

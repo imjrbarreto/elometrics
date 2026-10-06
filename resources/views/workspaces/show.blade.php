@@ -48,11 +48,7 @@
                             <div>
                                 <x-input-label for="member_role" value="Rol" />
 
-                                <select id="member_role" name="role"
-                                    class="mt-1 block w-full rounded-md border-gray-300
-                           shadow-sm focus:border-indigo-500
-                           focus:ring-indigo-500"
-                                    required>
+                                <select id="member_role" name="role" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
                                     <option value="student" @selected(old('role', 'student') === 'student')>
                                         Alumno
                                     </option>

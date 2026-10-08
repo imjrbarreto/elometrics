@@ -1,9 +1,8 @@
 <x-app-layout>
     <div class="min-h-screen bg-slate-50 py-10">
         <div class="mx-auto max-w-2xl px-4 sm:px-6">
-            <a href="{{ route('workspaces.show', $workspace) }}"
-                class="text-sm font-medium text-indigo-600 hover:text-indigo-800">
-                ← Volver al workspace
+            <a href="{{ route('workspaces.show', $workspace) }}">
+                <x-back-workspace>← Volver al workspace</x-back-workspace>
             </a>
 
             <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
@@ -78,10 +77,9 @@
                         @enderror
                     </div>
 
-                    <button type="submit"
-                        class="rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white hover:bg-indigo-700">
+                    <x-primary-button>
                         Guardar sesión
-                    </button>
+                    </x-primary-button>
                 </form>
             </div>
         </div>

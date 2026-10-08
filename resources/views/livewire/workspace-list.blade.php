@@ -10,7 +10,7 @@
                 aria-pressed="{{ $tab === $value ? 'true' : 'false' }}"
                 @class([
                     'rounded-xl px-4 py-2 text-sm font-semibold transition',
-                    'bg-indigo-600 text-white' => $tab === $value,
+                    'bg-gray-800 text-white' => $tab === $value,
                     'bg-white text-slate-600 hover:bg-indigo-50' => $tab !== $value,
                 ])
             >

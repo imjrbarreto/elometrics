@@ -40,7 +40,7 @@
 
                             <p class="text-sm text-gray-600">
                                 {{ $session->workspace->title }}
-                                · {{ $session->date->format('d/m/Y H:i') }}
+                                · {{ $session->date->format('d/m/Y') }}
                             </p>
                         </a>
 

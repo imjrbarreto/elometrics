@@ -2,7 +2,7 @@
     <div class="min-h-screen bg-slate-50 py-10">
         <div class="mx-auto max-w-2xl px-4 sm:px-6">
             <a href="{{ route('workspaces.show', $workspace) }}"
-               class="text-sm font-medium text-indigo-600 hover:text-indigo-800">
+               class="text-sm font-medium text-gray-800 hover:text-indigo-800">
                 ← Volver al workspace
             </a>
 
@@ -26,10 +26,9 @@
                         @enderror
                     </div>
 
-                    <button type="submit"
-                            class="rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white hover:bg-indigo-700">
+                    <x-primary-button>
                         Guardar alumno
-                    </button>
+                    </x-primary-button>
                 </form>
             </div>
         </div>

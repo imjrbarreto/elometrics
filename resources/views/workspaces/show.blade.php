@@ -17,13 +17,13 @@
                     </div>
 
                     @can('manageMembers', $workspace)
-                    <div>
-                        <a href="{{ route('workspaces.edit', $workspace) }}">
-                            <x-primary-button>
-                                Editar workspace
-                            </x-primary-button>
-                        </a>
-                    </div>
+                        <div>
+                            <a href="{{ route('workspaces.edit', $workspace) }}">
+                                <x-primary-button>
+                                    Editar workspace
+                                </x-primary-button>
+                            </a>
+                        </div>
                     @endcan
                 </div>
 
@@ -46,21 +46,22 @@
                             </div>
 
                             <div>
-                                <x-input-label for="member_role" value="Rol" />
+                                <label for="member_role" class="block text-sm font-medium text-slate-700">
+                                    Rol
+                                </label>
 
-                                <select id="member_role" name="role" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                                    <option value="student" @selected(old('role', 'student') === 'student')>
-                                        Alumno
-                                    </option>
-                                    <option value="coach" @selected(old('role', 'student') === 'coach')>
-                                        Entrenador
-                                    </option>
-                                    <option value="viewer" @selected(old('role', 'student') === 'viewer')>
-                                        Observador
-                                    </option>
+                                <select id="member_role" name="role" required class="mt-1 block w-full rounded-md border-slate-300">
+
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->value }}" @selected(old('role') === $role->value)>
+                                            {{ $role->label() }}
+                                        </option>
+                                    @endforeach
                                 </select>
 
-                                <x-input-error :messages="$errors->get('role')" class="mt-2" />
+                                @error('role')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <x-primary-button>
@@ -91,7 +92,7 @@
                                 </p>
 
                                 <p class="text-sm text-gray-600">
-                                    {{ $member->pivot->role }}
+                                    {{ $member->pivot->role->label() }}
                                 </p>
                             </div>
                             @can('manageMembers', $workspace)
@@ -151,11 +152,11 @@
             <section class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
                 <div class="flex items-center justify-between">
                     <h2 class="text-xl font-bold text-slate-900">Alumnos</h2>
-    
+
                     @can('manageStudents', $workspace)
                         <a href="{{ route('workspaces.students.create', $workspace) }}">
                             <x-primary-button>
-                            + Añadir alumno
+                                + Añadir alumno
                             </x-primary-button>
                         </a>
                     @endcan

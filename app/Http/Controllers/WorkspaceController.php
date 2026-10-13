@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\WorkspaceRole;
 use App\Enums\WorkspaceStatus;
 use App\Http\Requests\WorkspaceRequest;
 use App\Models\Workspace;
@@ -57,7 +58,9 @@ class WorkspaceController extends Controller
 
         $trainingSessions = $workspace->trainingSessions()->orderByDesc('date')->get();
 
-        return view('workspaces.show', compact('workspace', 'students', 'trainingSessions'));
+        $roles = WorkspaceRole::cases();
+
+        return view('workspaces.show', compact('workspace', 'students', 'trainingSessions', 'roles'));
     }
 
     /**

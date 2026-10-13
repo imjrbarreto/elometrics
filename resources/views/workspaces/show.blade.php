@@ -1,16 +1,13 @@
 <x-app-layout>
     <div class="min-h-screen bg-slate-50 py-10">
         <div class="mx-auto max-w-4xl px-4 sm:px-6">
-            <a href="{{ route('workspaces.index') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-800">
-                ← Volver a mis workspaces
+            <a href="{{ route('workspaces.index') }}">
+                <x-back-workspace>← Volver a mis workspaces</x-back-workspace>
             </a>
 
             <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-                <div class="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+                <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                        <p class="text-sm font-semibold uppercase tracking-widest text-indigo-600">
-                            Workspace
-                        </p>
                         <h1 class="mt-2 text-3xl font-bold text-slate-900">
                             {{ __($workspace->title) }}
                         </h1>
@@ -20,10 +17,13 @@
                     </div>
 
                     @can('manageMembers', $workspace)
-                        <a href="{{ route('workspaces.edit', $workspace) }}"
-                            class="inline-flex justify-center rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white hover:bg-indigo-700">
-                            Editar workspace
-                        </a>
+                        <div>
+                            <a href="{{ route('workspaces.edit', $workspace) }}">
+                                <x-primary-button>
+                                    Editar workspace
+                                </x-primary-button>
+                            </a>
+                        </div>
                     @endcan
                 </div>
 
@@ -46,21 +46,22 @@
                             </div>
 
                             <div>
-                                <x-input-label for="member_role" value="Rol" />
+                                <label for="member_role" class="block text-sm font-medium text-slate-700">
+                                    Rol
+                                </label>
 
-                                <select id="member_role" name="role" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                                    <option value="student" @selected(old('role', 'student') === 'student')>
-                                        Alumno
-                                    </option>
-                                    <option value="coach" @selected(old('role', 'student') === 'coach')>
-                                        Entrenador
-                                    </option>
-                                    <option value="viewer" @selected(old('role', 'student') === 'viewer')>
-                                        Observador
-                                    </option>
+                                <select id="member_role" name="role" required class="mt-1 block w-full rounded-md border-slate-300">
+
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->value }}" @selected(old('role') === $role->value)>
+                                            {{ $role->label() }}
+                                        </option>
+                                    @endforeach
                                 </select>
 
-                                <x-input-error :messages="$errors->get('role')" class="mt-2" />
+                                @error('role')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <x-primary-button>
@@ -91,7 +92,7 @@
                                 </p>
 
                                 <p class="text-sm text-gray-600">
-                                    {{ $member->pivot->role }}
+                                    {{ $member->pivot->role->label() }}
                                 </p>
                             </div>
                             @can('manageMembers', $workspace)
@@ -136,10 +137,9 @@
                             @csrf
                             @method('DELETE')
 
-                            <button type="submit"
-                                class="rounded-xl border border-red-200 px-4 py-2 font-semibold text-red-700 hover:bg-red-50">
+                            <x-danger-button>
                                 Eliminar workspace
-                            </button>
+                            </x-danger-button>
                         </form>
                     @endcan
                     <p class="mt-3 text-sm text-slate-500">
@@ -150,14 +150,17 @@
             </div>
 
             <section class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-                <h2 class="text-xl font-bold text-slate-900">Alumnos</h2>
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-bold text-slate-900">Alumnos</h2>
 
-                @can('manageStudents', $workspace)
-                    <a href="{{ route('workspaces.students.create', $workspace) }}"
-                        class="text-sm font-semibold text-indigo-600 hover:text-indigo-800">
-                        + Añadir alumno
-                    </a>
-                @endcan
+                    @can('manageStudents', $workspace)
+                        <a href="{{ route('workspaces.students.create', $workspace) }}">
+                            <x-primary-button>
+                                + Añadir alumno
+                            </x-primary-button>
+                        </a>
+                    @endcan
+                </div>
 
                 <div class="mt-6 space-y-3">
                     @forelse ($students as $student)
@@ -171,9 +174,9 @@
                                     @csrf
                                     @method('DELETE')
 
-                                    <button type="submit" class="text-sm font-semibold text-red-700 hover:text-red-900">
+                                    <x-danger-button>
                                         Eliminar
-                                    </button>
+                                    </x-danger-button>
                                 </form>
                             @endcan
                         </div>
@@ -190,9 +193,10 @@
                     <h2 class="text-xl font-semibold">Sesiones</h2>
 
                     @can('manageTrainingSessions', $workspace)
-                        <a href="{{ route('training-sessions.create', $workspace) }}"
-                            class="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-indigo-700">
-                            Nueva sesión
+                        <a href="{{ route('training-sessions.create', $workspace) }}">
+                            <x-primary-button>
+                                Nueva sesión
+                            </x-primary-button>
                         </a>
                     @endcan
                 </div>
@@ -200,10 +204,10 @@
                 <div class="mt-6 grid gap-4 sm:grid-cols-2">
                     @forelse ($trainingSessions as $trainingSession)
                         <a href="{{ route('training-sessions.show', [$workspace, $trainingSession]) }}"
-                            class="block rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-300 hover:shadow-md">
+                            class="block rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-gray-800 hover:shadow-md">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <p class="text-sm font-medium text-indigo-600">
+                                    <p class="text-sm font-medium text-gray-600">
                                         {{ __($trainingSession->date->format('d/m/Y')) }}
                                     </p>
 

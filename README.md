@@ -1,58 +1,130 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Elometrics
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Elometrics is a web application for organizing chess training. Coaches can manage workspaces, students, and training sessions, and share access with other users through workspace roles.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Welcome page and authentication
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Simple welcome page with the application name and links to log in or register.
+- Signed-in users can access their workspaces from the welcome page.
+- User registration and login.
+- Unique usernames to identify users when adding workspace members.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Workspaces
 
-## Learning Laravel
+- Create, view, edit, and delete workspaces.
+- Organize workspaces by status: active, paused, or archived.
+- View owned workspaces separately from shared workspaces.
+- Show the number of students in each workspace.
+- Paginate the workspace list.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Workspace membership
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Owners can add registered users by username and assign a role.
+- Owners can remove members.
+- Members can leave a workspace.
+- Access and actions are controlled by workspace permissions.
+- Available member roles are defined in a PHP enum and displayed with Spanish labels.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+Membership is assigned directly; there is currently no pending invitation or acceptance flow. The owner is stored separately from the workspace members.
 
-## Agentic Development
+| Role | View workspace | Manage training sessions | Manage members | Edit or delete workspace |
+| --- | --- | --- | --- | --- |
+| Owner | Yes | Yes | Yes | Yes |
+| Coach | Yes | Yes | No | No |
+| Student | Yes | No | No | No |
+| Viewer | Yes | No | No | No |
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### Students
+
+- Add students to a workspace.
+- List and remove students.
+- Student records are currently separate from registered user accounts.
+
+The Student membership role grants workspace access to a registered user; it does not automatically link that user to a student record.
+
+### Training sessions
+
+- Create, view, edit, and delete training sessions.
+- Store a title, scheduled date and time, optional notes, and an optional link.
+- Assign a category: tactics, strategy, openings, endgames, or games.
+- Track session status: pending, completed, or cancelled.
+
+## Tech stack
+
+- PHP and Laravel 13
+- Blade and Livewire
+- Laravel Breeze for authentication
+- Tailwind CSS
+- MySQL for application data
+- Pest for automated tests
+- Composer and npm for dependency management
+
+## Local installation
+
+### Requirements
+
+- PHP and the extensions required by the project's `composer.json`
+- Composer
+- Node.js and npm compatible with the project's frontend dependencies
+- MySQL
+- Git
+
+### 1. Clone the repository
+
+The current development version is available on the `dev` branch.
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone --branch dev https://github.com/imjrbarreto/elometrics.git
+cd elometrics
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2. Install dependencies
 
-## Contributing
+```bash
+composer install
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Configure the environment
 
-## Code of Conduct
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Create a MySQL database named `elometrics` and update the database settings in `.env` with your local credentials:
 
-## Security Vulnerabilities
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=elometrics
+DB_USERNAME=your_database_user
+DB_PASSWORD=your_database_password
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 4. Run migrations
 
-## License
+```bash
+php artisan migrate
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 5. Start the application
+
+Start the development environment:
+
+```bash
+composer run dev
+```
+
+Open [http://localhost:8000](http://localhost:8000) in your browser and register an account.
+
+
+## Planned improvements
+
+- Add workspace tasks and student interaction.
+- Add workspace goals.
+- Store chess positions (FEN) and games (PGN) for sessions and tasks.
+- Display positions and games using an interactive chessboard.

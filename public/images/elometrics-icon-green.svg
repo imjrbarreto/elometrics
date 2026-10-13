@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="160" height="160" viewBox="0 0 160 160"
+     role="img" aria-labelledby="elometrics-title elometrics-description">
+  <title id="elometrics-title">EloMetrics</title>
+  <desc id="elometrics-description">Símbolo de EloMetrics en verde, con fondo transparente.</desc>
+  <g fill="#28513A">
+    <path d="M24 62V24h38v12H36v26H24Z"/>
+    <path d="M98 24h38v38h-12V36H98V24Z"/>
+    <path d="M24 98h12v26h26v12H24V98Z"/>
+    <path d="M124 98h12v38H98v-12h26V98Z"/>
+    <rect x="58" y="78" width="24" height="24"/>
+    <path fill-rule="evenodd" d="M76 52h28v28H76V52Zm6 6v16h16V58H82Z"/>
+  </g>
+</svg>
